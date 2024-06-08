@@ -29,3 +29,12 @@ function operate(num1, operator, num2) {
         return dividie(num1, num2)
     }
 }
+
+const numbers = document.querySelectorAll(".number, .operator");
+const display = document.querySelector(".display");
+let displayContent = "";
+
+numbers.forEach((number) => number.addEventListener("click", () => {
+    displayContent += number.textContent;
+    display.textContent = displayContent;
+}))
