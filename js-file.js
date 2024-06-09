@@ -11,6 +11,9 @@ function multiply(first, second) {
 }
 
 function divide(first, second) {
+    if (second == 0) {
+        return
+    }
     return first / second;
 }
 
@@ -35,11 +38,13 @@ function operate(num1, operator, num2) {
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 const equal = document.querySelector(".equals");
+const decimal = document.querySelector(".decimal");
 const display = document.querySelector(".display");
 const clear = document.querySelector(".clear");
 let displayContent = "",
     result = "",
-    operatorAvailability = true;
+    operatorAvailability = true,
+    decimalAvailability = true;
 
 numbers.forEach((number) => number.addEventListener("click", () => {
     displayContent += number.textContent;
@@ -63,7 +68,16 @@ operators.forEach((operator) => operator.addEventListener("click", () => {
     }
     display.textContent = displayContent;
     operatorAvailability = false;
+    decimalAvailability = true;
 }));
+
+decimal.addEventListener("click", () => {
+    if (decimalAvailability == true) {
+        displayContent += ".";
+        display.textContent = displayContent;
+        decimalAvailability = false;
+    }
+});
 
 equal.addEventListener("click", () => {
     let count = 0;
@@ -87,4 +101,5 @@ clear.addEventListener("click", () => {
     display.textContent = "0";
     result = "";
     operatorAvailability = true;
+    decimalAvailability = true;
 })

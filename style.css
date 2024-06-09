@@ -32,6 +32,7 @@ body {
 .number,
 .equals,
 .operator,
+.decimal,
 .clear {
     height: 75px;
     width: 100px;
@@ -44,7 +45,8 @@ body {
     border-radius: 6px;
 }
 
-.number {
+.number, 
+.decimal {
     background-color: #ffd8d8;
 }
 
