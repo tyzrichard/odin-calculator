@@ -14,7 +14,7 @@ function multiply(first, second) {
 
 function divide(first, second) {
     if (second == 0) {
-        return
+        return "Infinity? Nah, I'd win"
     }
     return first / second;
 }
@@ -58,16 +58,16 @@ function addNum(num) {
 }
 
 function addOperator(operator) {
-    if (displayContent == "") {
+    if (displayContent == "") { //after using the equals button/equate() function
         displayContent += `${result} ${operator} `;
-    } else if (displayContent.slice(-1) == " ") {
-        displayContent = displayContent.slice(0, -3) + ` ${operator} `;
-    } else if (operatorAvailability == false) {
+    } else if (displayContent.slice(-1) == " ") { //successively pressing operators swaps the current for the new one
+        displayContent = displayContent.slice(0, -3) + ` ${operator} `; 
+    } else if (operatorAvailability == false) { //for auto-equating when a second operator is used
         let splitContents = displayContent.split(" ", 3);
         displayContent = operate(splitContents[0], splitContents[1], splitContents[2]);
         result = displayContent
         displayContent += ` ${operator} `;
-    } else {
+    } else { //for regular adding of operators
         displayContent += ` ${operator} `;
     }
     display.textContent = displayContent;
