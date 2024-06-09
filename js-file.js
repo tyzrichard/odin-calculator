@@ -1,3 +1,5 @@
+// operator functions
+
 function add(first, second) {
     return first + second;
 }
@@ -35,6 +37,8 @@ function operate(num1, operator, num2) {
     }
 }
 
+// main code for the calculator
+
 const numbers = document.querySelectorAll(".number");
 const operators = document.querySelectorAll(".operator");
 const equal = document.querySelector(".equals");
@@ -46,60 +50,100 @@ let displayContent = "",
     operatorAvailability = true,
     decimalAvailability = true;
 
-numbers.forEach((number) => number.addEventListener("click", () => {
-    displayContent += number.textContent;
-    display.textContent = displayContent;
-}));
+// a few shared functions for adding numbers, operators, and using the decimal point, equal and clear buttons
 
-operators.forEach((operator) => operator.addEventListener("click", () => {
+function addNum(num) {
+    displayContent += num;
+    display.textContent = displayContent;
+}
+
+function addOperator(operator) {
     if (displayContent == "") {
-        displayContent += `${result} ${operator.textContent} `;
+        displayContent += `${result} ${operator} `;
     } else if (displayContent.slice(-1) == " ") {
-        displayContent = displayContent.slice(0, -3) + ` ${operator.textContent} `;
+        displayContent = displayContent.slice(0, -3) + ` ${operator} `;
     } else if (operatorAvailability == false) {
         let splitContents = displayContent.split(" ", 3);
         displayContent = operate(splitContents[0], splitContents[1], splitContents[2]);
         display.textContent = displayContent
         result = displayContent
         displayContent = "";
-        displayContent += ` ${operator.textContent} `;
+        displayContent += ` ${operator} `;
     } else {
-        displayContent += ` ${operator.textContent} `;
+        displayContent += ` ${operator} `;
     }
     display.textContent = displayContent;
     operatorAvailability = false;
     decimalAvailability = true;
-}));
+}
 
-decimal.addEventListener("click", () => {
+function addDecimal() {
     if (decimalAvailability == true) {
         displayContent += ".";
         display.textContent = displayContent;
         decimalAvailability = false;
     }
-});
+}
 
-equal.addEventListener("click", () => {
+function equate() {
     let count = 0;
     for (let i = 0; i < displayContent.length; i++) {
         if (displayContent.charAt(i) == " ") {
             count += 1;
         }
-    }
-    console.log(displayContent[0], displayContent.slice(-1))
+    };
     if (count == 2 && (!isNaN(parseFloat(displayContent[0])) && isFinite(displayContent[0])) && (!isNaN(parseFloat(displayContent.slice(-1))) && isFinite(displayContent.slice(-1)))) {
         let splitContents = displayContent.split(" ", 3);
         displayContent = operate(splitContents[0], splitContents[1], splitContents[2]);
         display.textContent = displayContent
         result = displayContent
         displayContent = "";
-    }
-});
+    };
+}
 
-clear.addEventListener("click", () => {
+function clearAll() {
     displayContent = "";
     display.textContent = "0";
     result = "";
     operatorAvailability = true;
     decimalAvailability = true;
+}
+
+// calling the above functions for both UI and keypresses 
+
+display.onkeydown = () => {
+    let key = event.key;
+    if (!isNaN(key)) {
+        addNum(key);
+    } else if (key === "+" || key === "-" || key === "/") {
+        addOperator(key);
+    } else if (key === "x" || key === "*") {
+        addOperator("×");
+    } else if (key === ".") {
+        addDecimal()
+    } else if (key === "=" || key === "Enter") {
+        equate();
+    } else if (key === "Backspace") {
+        clearAll();
+    }
+}
+
+numbers.forEach((number) => number.addEventListener("click", () => {
+    addNum(number.textContent);
+}));
+
+operators.forEach((operator) => operator.addEventListener("click", () => {
+    addOperator(operator.textContent)
+}));
+
+decimal.addEventListener("click", () => {
+    addDecimal()
+});
+
+equal.addEventListener("click", () => {
+    equate()
+});
+
+clear.addEventListener("click", () => {
+    clearAll()
 })
