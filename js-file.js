@@ -65,9 +65,7 @@ function addOperator(operator) {
     } else if (operatorAvailability == false) {
         let splitContents = displayContent.split(" ", 3);
         displayContent = operate(splitContents[0], splitContents[1], splitContents[2]);
-        display.textContent = displayContent
         result = displayContent
-        displayContent = "";
         displayContent += ` ${operator} `;
     } else {
         displayContent += ` ${operator} `;
