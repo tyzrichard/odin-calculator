@@ -9,14 +9,22 @@ function subtract(first, second) {
 }
 
 function multiply(first, second) {
-    return first * second;
+    normal = Math.round((first*second) * 1000000) / 1000000;
+    if (normal > 0) {
+        return normal
+    }
+    return (first*second).toPrecision(3);
 }
 
 function divide(first, second) {
     if (second == 0) {
         return "Infinity? Nah, I'd win"
     }
-    return first / second;
+    normal = Math.round((first/second) * 1000000) / 1000000;
+    if (normal > 0) {
+        return normal
+    }
+    return (first/second).toPrecision(3);
 }
 
 let num1 = null,
