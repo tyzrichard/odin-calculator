@@ -6,7 +6,5 @@ The final app of the Odin Project's Foundations Course, this got me to go outsid
 - Allows the usage of decimal places too
 - A decent looking UI, using a pastel colour scheme
 - And it also has Keyboard support! Just tap the display and type your stuff in.
-- It also has some extras here and there, but I'll leave it for you to discover on your own.
-
-### Note: Don't try messing around with negatives just yet!
-It kinda breaks my code, and won't calculate most of the time. I could rework my code to allow that, but thats's for a future update. One that I hope to actually carry through on :D
+- The calculator also supports negative numbers and rounds really small calculations to 3sf
+- It also has some extras here and there, but I'll leave it for you to discover on your own :D
