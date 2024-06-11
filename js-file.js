@@ -59,19 +59,30 @@ function addNum(num) {
 
 function addOperator(operator) {
     if (displayContent == "") { //after using the equals button/equate() function
-        displayContent += `${result} ${operator} `;
+        if (operator == "-") {
+            displayContent += "-";
+        } else {
+            displayContent += `${result} ${operator} `;
+            operatorAvailability = false;
+        }
     } else if (displayContent.slice(-1) == " ") { //successively pressing operators swaps the current for the new one
-        displayContent = displayContent.slice(0, -3) + ` ${operator} `; 
-    } else if (operatorAvailability == false) { //for auto-equating when a second operator is used
+        if (operator == "-") {
+            displayContent += "-";
+        } else {
+            displayContent = displayContent.slice(0, -3) + ` ${operator} `;
+            operatorAvailability = false;
+        }
+    } else if (operatorAvailability == false && (!isNaN(parseFloat(displayContent.slice(-1))) && isFinite(displayContent.slice(-1)))) { //for auto-equating when a second operator is used
         let splitContents = displayContent.split(" ", 3);
         displayContent = operate(splitContents[0], splitContents[1], splitContents[2]);
         result = displayContent
         displayContent += ` ${operator} `;
-    } else { //for regular adding of operators
+        operatorAvailability = false;
+    } else if (displayContent.slice(-1) != "-") { //for regular adding of operators
         displayContent += ` ${operator} `;
+        operatorAvailability = false;
     }
     display.textContent = displayContent;
-    operatorAvailability = false;
     decimalAvailability = true;
 }
 
@@ -90,12 +101,14 @@ function equate() {
             count += 1;
         }
     };
-    if (count == 2 && (!isNaN(parseFloat(displayContent[0])) && isFinite(displayContent[0])) && (!isNaN(parseFloat(displayContent.slice(-1))) && isFinite(displayContent.slice(-1)))) {
+    if (count == 2) {
         let splitContents = displayContent.split(" ", 3);
-        displayContent = operate(splitContents[0], splitContents[1], splitContents[2]);
-        display.textContent = displayContent
-        result = displayContent
-        displayContent = "";
+        if ((!isNaN(parseFloat(splitContents[0])) && isFinite(splitContents[0])) && (!isNaN(parseFloat(splitContents[2])) && isFinite(splitContents[2]))) {
+            displayContent = operate(splitContents[0], splitContents[1], splitContents[2]);
+            display.textContent = displayContent
+            result = displayContent
+            displayContent = "";
+        }
     };
 }
 
